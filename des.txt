@@ -1,0 +1,89 @@
+To convert the file into binary, open file in binary mode and work from there. (file handling)
+
+//PSUEDOCODE FOR TRIPLE DES:
+
+//INPUT HANDLING:
+
+--GLOBAL VARS--
+bitset<64> keys[2];
+string user_E-D;
+string file_Name;
+
+int get_U-IN(string out, unsigned int state, int i):
+{
+	//purpose: Gets users input for the type of action to be taken :: return -1 when finished input collection
+	//out - is the sentance I want to send to the user to be displayed to prompt input
+	//state - the variable which controls which loop/checks need to be engaged, can be either 0, 1, 2
+	/** Steps:
+		(a) Check state, engage in corresponding loop
+		(b) prompt user for input. 
+		(c) string var = cin >> in; //where var is the type of encryption, the file name, or string [] subkeys
+			(1) int valid_input(string var, out) :: returns the next state and stores input or recursivley prompts input
+			(2) int valid_file(string var, out) :: returns the next state (either 2, if invalid input, or 2 for valid input)
+			(3) bool valid_key(string var, out, i) //var - the key, i - the key index, out - the message to displayed
+	**/ 
+	string in;
+	unsigned long long int hexIn;
+	
+	if (state > 2): 
+		return 0
+		
+	if ( state == 0 ):
+		cout << "Please enter: " << out << endl;
+		cin >> in
+		state = valid_input(in)
+		
+	if (state == 1):
+		cout << "Please enter: " << out << endl;
+		cin >> in
+		state = valid_file(in)
+		
+	if (state == 2 and i < 3):
+		cout << "Please enter: " << out << " no. " << i+1 << endl;
+		cin >> hex >> hexIn
+		state = valid_key(hexIn, i)
+}
+		
+		
+int valid_input(string in):
+	in[0] = lowercase(in[0]);
+	if (in[0] == 'E' or in[0] == 'D'):
+		user_E-D = in[0];
+		return get_U-IN("The file name: ", 1, 0)
+	else:
+		return get_U-IN("Either 'E' or 'D'", 0, 0)
+
+		
+int valid_file(string in):
+	// check if file exists
+	if (file exists):
+		file_Name = in;
+		return get_U-IN("Key", 2, 0)
+	if (file !exists):
+		return get_U-IN("the file name", 1, 0)
+
+		
+int valid_key(int in, int i):
+	/**
+		goal: take 'in' and convert to binary form hex, put into 
+	**/
+	if (i < 3)
+		subkeys[i] = bitset<64>(in)
+		return get_U-IN("key", 2, i+1)
+	else
+		return get_U-IN(NULL, 3, 0)
+		
+		
+ios::in	-- Open for input operations.
+ios::out --	Open for output operations.
+ios::binary	-- Open in binary mode.
+ios::ate --	Set the initial position at the end of the file.
+If this flag is not set, the initial position is the beginning of the file.
+ios::app	All output operations are performed at the end of the file, appending the content to the current content of the file.
+ios::trunc	If the file is opened for output operations and it already existed, its previous content is deleted and replaced by the new one.
+		
+
+		
+		
+
+	
